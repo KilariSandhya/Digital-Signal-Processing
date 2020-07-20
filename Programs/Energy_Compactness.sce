@@ -1,0 +1,45 @@
+clc;clear;clf;
+[y,Fs,bits]=wavread("m01ah.wav");
+sound(y,Fs);
+i = 5000;
+for x= 0.3:1/Fs:0.33
+    o(i-5000+1) = y(i);
+    i = i+1;
+end
+disp(length(o),"Length Of 30ms Signal: ")
+N = length(o);
+X_DFT = fft(o);
+X_DCT = dct(o);
+F1=X_DFT(1:10);
+F2=X_DFT(1:50);
+F3=X_DFT(1:100);
+F4=X_DFT(1:200);
+N1=0:length(F1)-1;
+N2=0:length(F2)-1;
+N3=0:length(F3)-1;
+N4=0:length(F4)-1;
+F11=X_DCT(1:10);
+F22=X_DCT(1:50);
+F33=X_DCT(1:100);
+F44=X_DCT(1:200);
+N11=0:length(F11)-1;
+N22=0:length(F22)-1;
+N33=0:length(F33)-1;
+N44=0:length(F44)-1;
+if10=ifft(X_DFT);
+if11=idct(X_DCT);
+figure(0);
+plot(o);
+figure(1);
+subplot(221);plot2d3(N1,F1/40);
+subplot(222);plot2d3(N2,F2/160);
+subplot(223);plot2d3(N3,F3/160);
+subplot(224);plot2d3(N4,F4/160);
+figure(2);
+subplot(221);plot2d3(N11,F11);
+subplot(222);plot2d3(N22,F22);
+subplot(223);plot2d3(N33,F33);
+subplot(224);plot2d3(N44,F44);
+figure(3);
+subplot(221);plot2d3(if10);
+subplot(222);plot2d3(if11);
